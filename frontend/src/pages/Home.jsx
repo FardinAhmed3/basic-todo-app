@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
-import Note from "../components/Note"
-import "../styles/Home.css"
+import Note from "../components/Note";
+import "../styles/Home.css";
 
 function Home() {
     const [notes, setNotes] = useState([]);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         getNotes();
@@ -46,6 +48,11 @@ function Home() {
             .catch((err) => alert(err));
     };
 
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate("/login");
+    };
+
     return (
         <div>
             <div>
@@ -78,6 +85,7 @@ function Home() {
                 <br />
                 <input type="submit" value="Submit"></input>
             </form>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     );
 }
